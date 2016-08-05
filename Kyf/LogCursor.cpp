@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "LogCursor.h"
 #include "Log.h"
+#include "LogSegment.h"
 
 LogCursor::LogCursor(const Log& log, offset_t start)
 	: m_log(log)

@@ -5,6 +5,7 @@
     <ClInclude Include="Log.h" />
     <ClInclude Include="LogSegment.h" />
     <ClInclude Include="LogCursor.h" />
+    <ClInclude Include="LogFwd.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />

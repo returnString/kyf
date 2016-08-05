@@ -1,7 +1,6 @@
 #pragma once
 
-class Log;
-class LogSegment;
+#include "LogFwd.h"
 
 class LogCursor
 {
@@ -12,7 +11,7 @@ public:
 
 private:
 	const Log& m_log;
-	const LogSegment* m_currentSegment;
+	ReadOnlyLogSegment m_currentSegment;
 	offset_t m_currentOffset;
 	size_t m_currentSegmentPos;
 };

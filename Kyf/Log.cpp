@@ -1,15 +1,16 @@
 #include "stdafx.h"
 #include "Log.h"
+#include "LogSegment.h"
 
 Log::Log(std::string name, size_t segmentSize)
 	: m_name(name)
 	, m_segmentSize(segmentSize)
+	, m_head(0)
 {
-	m_segments.insert(std::make_pair(0, LogSegment(0, m_segmentSize)));
-	m_segments.at(0).Initialise();
+	CreateNextSegment();
 }
 
-const LogSegment* Log::FindSegment(offset_t offset) const
+const ReadOnlyLogSegment Log::FindSegment(offset_t offset) const
 {
 	auto& it = m_segments.lower_bound(offset);
 	if (it == m_segments.end())
@@ -17,10 +18,10 @@ const LogSegment* Log::FindSegment(offset_t offset) const
 		return nullptr;
 	}
 
-	return &it->second;
+	return it->second;
 }
 
-const LogSegment* Log::GetSegmentAfter(const LogSegment& segment) const
+const ReadOnlyLogSegment Log::GetSegmentAfter(const LogSegment& segment) const
 {
 	auto& it = m_segments.find(segment.GetStartOffset());
 	assert(it != m_segments.end());
@@ -31,20 +32,27 @@ const LogSegment* Log::GetSegmentAfter(const LogSegment& segment) const
 		return nullptr;
 	}
 
-	return &nextIt->second;
+	return nextIt->second;
 }
 
 void Log::Commit(uint8_t* key, uint32_t keyLen, uint8_t* value, uint32_t valueLen)
 {
 	auto& it = m_segments.rbegin();
-	auto& segment = it->second;
 	m_head++;
 
-	if (!segment.WriteMessage(m_head, key, keyLen, value, valueLen))
+	auto segment = it->second;
+	if (!segment->WriteMessage(m_head, key, keyLen, value, valueLen))
 	{
-		LogSegment newSegment(m_head, m_segmentSize);
-		newSegment.Initialise();
-		newSegment.WriteMessage(m_head, key, keyLen, value, valueLen);
-		m_segments.insert(std::make_pair(m_head, newSegment));
+		segment = CreateNextSegment();
+		segment->WriteMessage(m_head, key, keyLen, value, valueLen);
 	}
+}
+
+WritableLogSegment Log::CreateNextSegment()
+{
+	auto segment = std::make_shared<LogSegment>(m_head, m_segmentSize);
+	segment->Initialise();
+	auto result = m_segments.insert(std::make_pair(m_head, segment));
+	assert(result.second);
+	return segment;
 }

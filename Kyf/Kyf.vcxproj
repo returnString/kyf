@@ -101,6 +101,7 @@
   <ItemGroup>
     <ClInclude Include="Log.h" />
     <ClInclude Include="LogCursor.h" />
+    <ClInclude Include="LogFwd.h" />
     <ClInclude Include="LogSegment.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>

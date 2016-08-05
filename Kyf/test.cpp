@@ -35,6 +35,7 @@ int main()
 		std::cout << "Read message back ['" << keyStr << "'] '" << valueStr << "' (" << currentOffset << ")" << std::endl;
 	}
 
+	std::cout << "Read " << offsets.size() << " messages back" << std::endl;
 	assert(offsets.size() == iterations);
 
 	std::string dummy;
