@@ -48,7 +48,6 @@ MemoryMappedFile::MemoryMappedFile(std::string filename, size_t size)
 	WINCALL(buffer = (uint8_t*)MapViewOfFile(m_mapHandle, FILE_MAP_ALL_ACCESS, 0, 0, 0));
 #elif LINUX
 	LINUXCALL(m_fileHandle = open(filename.c_str(), O_CREAT | O_RDWR));
-	std::cout << m_fileHandle;
 	LINUXCALL(ftruncate64(m_fileHandle, size));
 	LINUXCALL(buffer = (uint8_t*)mmap(nullptr, size, PROT_READ | PROT_WRITE, MAP_SHARED, m_fileHandle, 0));
 #endif
