@@ -17,4 +17,7 @@ using offset_t = uint64_t;
 template<class ArrayType, size_t size>
 size_t ArraySize(ArrayType(&)[size]) { return size; }
 
-const char SegmentFileExtension[] = ".kyf";
+namespace constants
+{
+	const char SegmentFileExtension[] = ".kyf";
+}

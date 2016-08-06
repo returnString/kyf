@@ -11,7 +11,7 @@ MemoryMappedFile::MemoryMappedFile(std::string filename, size_t size)
 #ifdef WIN32
 	std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
 	std::wostringstream nameStream;
-	nameStream << converter.from_bytes(filename) << SegmentFileExtension;
+	nameStream << converter.from_bytes(filename);
 	auto name = nameStream.str();
 	auto namePtr = name.c_str();
 
