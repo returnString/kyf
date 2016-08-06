@@ -25,7 +25,7 @@ bool LogCursor::Next(uint8_t*& key, uint32_t& keyLen, uint8_t*& value, uint32_t&
 	else
 	{
 		m_currentSegmentPos = 0;
-		if (m_currentSegment = m_log.GetSegmentAfter(*m_currentSegment))
+		if ((m_currentSegment = m_log.GetSegmentAfter(*m_currentSegment)))
 		{
 			return Next(key, keyLen, value, valueLen);
 		}

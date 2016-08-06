@@ -32,7 +32,7 @@ bool LogSegment::WriteMessage(offset_t offset, uint8_t* key, uint32_t keyLen, ui
 void LogSegment::WriteBinary(uint8_t* data, uint32_t len)
 {
 	WriteData(len);
-	memcpy(m_file.buffer + m_writePos, data, len);
+	std::memcpy(m_file.buffer + m_writePos, data, len);
 	m_writePos += len;
 }
 

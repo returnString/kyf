@@ -6,8 +6,8 @@ class Log
 {
 public:
 	Log(std::string name, size_t segmentSize);
-	const ReadOnlyLogSegment Log::FindSegment(offset_t offset) const;
-	const ReadOnlyLogSegment Log::GetSegmentAfter(const LogSegment& segment) const;
+	const ReadOnlyLogSegment FindSegment(offset_t offset) const;
+	const ReadOnlyLogSegment GetSegmentAfter(const LogSegment& segment) const;
 	void Commit(uint8_t* key, uint32_t keyLen, uint8_t* value, uint32_t valueLen);
 
 private:

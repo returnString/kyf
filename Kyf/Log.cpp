@@ -12,7 +12,7 @@ Log::Log(std::string name, size_t segmentSize)
 
 const ReadOnlyLogSegment Log::FindSegment(offset_t offset) const
 {
-	auto& it = m_segments.lower_bound(offset);
+	auto it = m_segments.lower_bound(offset);
 	if (it == m_segments.end())
 	{
 		return nullptr;
@@ -23,10 +23,10 @@ const ReadOnlyLogSegment Log::FindSegment(offset_t offset) const
 
 const ReadOnlyLogSegment Log::GetSegmentAfter(const LogSegment& segment) const
 {
-	auto& it = m_segments.find(segment.GetStartOffset());
+	auto it = m_segments.find(segment.GetStartOffset());
 	assert(it != m_segments.end());
 
-	auto& nextIt = std::next(it);
+	auto nextIt = std::next(it);
 	if (nextIt == m_segments.end())
 	{
 		return nullptr;
@@ -37,7 +37,7 @@ const ReadOnlyLogSegment Log::GetSegmentAfter(const LogSegment& segment) const
 
 void Log::Commit(uint8_t* key, uint32_t keyLen, uint8_t* value, uint32_t valueLen)
 {
-	auto& it = m_segments.rbegin();
+	auto it = m_segments.rbegin();
 	m_head++;
 
 	auto segment = it->second;

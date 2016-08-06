@@ -26,7 +26,7 @@ int main()
 	while (cursor.Next(key, keyLen, value, valueLen))
 	{
 		offset_t currentOffset = cursor.GetOffset();
-		auto& insertion = offsets.insert(currentOffset);
+		auto insertion = offsets.insert(currentOffset);
 		assert(insertion.second);
 
 		std::string keyStr((char*)key, keyLen);

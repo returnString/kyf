@@ -1,0 +1,1 @@
+g++ Kyf/*.cpp -o build/kyf -std=c++11 -march=x86-64

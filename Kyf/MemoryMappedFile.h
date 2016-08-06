@@ -11,10 +11,10 @@ struct MemoryMappedFile
 	size_t size;
 
 private:
-#ifdef WIN32
+#if WINDOWS
 	HANDLE m_fileHandle;
 	HANDLE m_mapHandle;
-#else
-	UMIMPLEMENTED("Memory mapped files");
+#elif LINUX
+	int m_fileHandle;
 #endif
 };

@@ -1,14 +1,20 @@
 #include "stdafx.h"
 #include "MemoryMappedFile.h"
 
+#ifdef LINUX
+#include <sys/mman.h>
+#include <unistd.h>
+#include <fcntl.h>
+#endif
+
 MemoryMappedFile::MemoryMappedFile(std::string filename, size_t size)
 	: size(size)
-#ifdef WIN32
+#if WINDOWS
 	, m_fileHandle(INVALID_HANDLE_VALUE)
 	, m_mapHandle(INVALID_HANDLE_VALUE)
 #endif
 {
-#ifdef WIN32
+#if WINDOWS
 	std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
 	std::wostringstream nameStream;
 	nameStream << converter.from_bytes(filename);
@@ -40,18 +46,22 @@ MemoryMappedFile::MemoryMappedFile(std::string filename, size_t size)
 
 	WINCALL(m_mapHandle = CreateFileMapping(m_fileHandle, nullptr, PAGE_READWRITE, 0, 0, nullptr));
 	WINCALL(buffer = (uint8_t*)MapViewOfFile(m_mapHandle, FILE_MAP_ALL_ACCESS, 0, 0, 0));
-#else
-	UMIMPLEMENTED("Memory mapped files");
+#elif LINUX
+	LINUXCALL(m_fileHandle = open(filename.c_str(), O_CREAT | O_RDWR));
+	std::cout << m_fileHandle;
+	LINUXCALL(ftruncate64(m_fileHandle, size));
+	LINUXCALL(buffer = (uint8_t*)mmap(nullptr, size, PROT_READ | PROT_WRITE, MAP_SHARED, m_fileHandle, 0));
 #endif
 }
 
 MemoryMappedFile::~MemoryMappedFile()
 {
-#ifdef WIN32
+#ifdef WINDOWS
 	WINCALL(UnmapViewOfFile(buffer));
 	WINCALL(CloseHandle(m_mapHandle));
 	WINCALL(CloseHandle(m_fileHandle));
-#else
-	UMIMPLEMENTED("Memory mapped files");
+#elif LINUX
+	LINUXCALL(munmap(buffer, size));
+	LINUXCALL(close(m_fileHandle));
 #endif
 }
