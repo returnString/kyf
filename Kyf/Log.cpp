@@ -51,7 +51,6 @@ void Log::Commit(uint8_t* key, uint32_t keyLen, uint8_t* value, uint32_t valueLe
 WritableLogSegment Log::CreateNextSegment()
 {
 	auto segment = std::make_shared<LogSegment>(m_head, m_segmentSize);
-	segment->Initialise();
 	auto result = m_segments.insert(std::make_pair(m_head, segment));
 	assert(result.second);
 	return segment;

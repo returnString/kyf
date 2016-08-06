@@ -9,6 +9,8 @@
 #include <windows.h>
 #include <sstream>
 #include <iostream>
+#include <locale>
+#include <codecvt>
 
 using offset_t = uint64_t;
 

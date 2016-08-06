@@ -103,12 +103,15 @@
     <ClInclude Include="LogCursor.h" />
     <ClInclude Include="LogFwd.h" />
     <ClInclude Include="LogSegment.h" />
+    <ClInclude Include="MemoryMappedFile.h" />
+    <ClInclude Include="PlatformHelpers.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Log.cpp" />
     <ClCompile Include="LogCursor.cpp" />
     <ClCompile Include="LogSegment.cpp" />
+    <ClCompile Include="MemoryMappedFile.cpp" />
     <ClCompile Include="test.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

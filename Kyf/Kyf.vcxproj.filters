@@ -6,6 +6,12 @@
     <ClInclude Include="LogSegment.h" />
     <ClInclude Include="LogCursor.h" />
     <ClInclude Include="LogFwd.h" />
+    <ClInclude Include="MemoryMappedFile.h">
+      <Filter>Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="PlatformHelpers.h">
+      <Filter>Platform</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -13,5 +19,13 @@
     <ClCompile Include="LogSegment.cpp" />
     <ClCompile Include="LogCursor.cpp" />
     <ClCompile Include="test.cpp" />
+    <ClCompile Include="MemoryMappedFile.cpp">
+      <Filter>Platform</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Platform">
+      <UniqueIdentifier>{40b64811-9b65-4094-99f5-16f02792bd52}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>
