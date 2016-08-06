@@ -5,6 +5,8 @@
 struct MemoryMappedFile
 {
 	MemoryMappedFile(std::string filename, size_t size);
+	~MemoryMappedFile();
+
 	uint8_t* buffer;
 	size_t size;
 

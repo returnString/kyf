@@ -44,3 +44,14 @@ MemoryMappedFile::MemoryMappedFile(std::string filename, size_t size)
 	UMIMPLEMENTED("Memory mapped files");
 #endif
 }
+
+MemoryMappedFile::~MemoryMappedFile()
+{
+#ifdef WIN32
+	WINCALL(UnmapViewOfFile(buffer));
+	WINCALL(CloseHandle(m_mapHandle));
+	WINCALL(CloseHandle(m_fileHandle));
+#else
+	UMIMPLEMENTED("Memory mapped files");
+#endif
+}
